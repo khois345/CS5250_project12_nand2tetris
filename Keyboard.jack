@@ -6,9 +6,11 @@
  * A library for handling user input from the keyboard.
  */
 class Keyboard {
+    static Array keyboard;
 
     /** Initializes the keyboard. */
     function void init() {
+        let keyboard = 24576; // Base address of the keyboard memory in the Hack platform
     } 
 
     /**
@@ -32,18 +34,49 @@ class Keyboard {
      * F1 - F12 = 141 - 152
      */
     function char keyPressed() {
+        return keyboard[0];
     }
 
     /**	Waits until a key is pressed on the keyboard and released,
      *  then echoes the key to the screen, and returns the character 
      *  of the pressed key. */
     function char readChar() {
+        var char c;
+        while (keyPressed() == 0) {}
+        let c = Keyboard.keyPressed();
+        while (keyPressed() != 0) {}
+
+        // Echo on screen
+        do Output.printChar(c);
+
+        return c
     }
 
     /**	Displays the message on the screen, reads from the keyboard the entered
      *  text until a newline character is detected, echoes the text to the screen,
      *  and returns its value. Also handles user backspaces. */
     function String readLine(String message) {
+        var String newLine;
+        var char c;
+
+        let newLine = String.new(80)   // Assume max string length is 80
+        do Output.printString(message);
+
+        while (true) {
+            let c = readChar();
+
+            if (c = 128) {  // Newline in ASCII
+                return newLine;
+            }
+            
+            if (c = 129) {   // Backspace in ACSII
+                do newLine.eraseLastChar();
+            } else {
+                do newLine.appendChar(c);
+            }
+        }
+
+        return newLine;
     }   
 
     /** Displays the message on the screen, reads from the keyboard the entered
@@ -51,5 +84,8 @@ class Keyboard {
      *  and returns its integer value (until the first non-digit character in the
      *  entered text is detected). Also handles user backspaces. */
     function int readInt(String message) {
+        var String newLine;
+        let newLine = Keyboard.readLine(message);
+        return newLine.intValue();  // Use existing intValue func
     }
 }
