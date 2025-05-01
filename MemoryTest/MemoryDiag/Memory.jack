@@ -42,15 +42,15 @@ class Memory {
     function int alloc(int size) {
         var int currentBlock, nextBlock, blockSize;
         let currentBlock = freeList;
-        while (~(currentBlock = 0)) {
+        while ( ~(currentBlock = 0) ) {
             let nextBlock = ram[currentBlock]; // address of next free block
             let blockSize = ram[currentBlock + 1]; // length of current free block
-            if (~(blockSize < size + 1)) { // check blockSize >= size + 1
-            let ram[currentBlock] = size; // set size for used memory block
-            let freeList = currentBlock + size + 1; // free list pointer should start from the end of used block
-            let ram[freeList] = nextBlock;
-            let ram[freeList + 1] = blockSize - (size + 1);
-            return currentBlock + 1;
+            if ( ~(blockSize < size + 1)) { // check blockSize >= size + 1
+                let ram[currentBlock] = size; // set size for used memory block
+                let freeList = currentBlock + size + 1; // free list pointer should start from the end of used block
+                let ram[freeList] = nextBlock;
+                let ram[freeList + 1] = blockSize - (size + 1);
+                return currentBlock + 1;
             }
             let currentBlock = nextBlock;
         }
