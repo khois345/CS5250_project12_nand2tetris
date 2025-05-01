@@ -11,6 +11,8 @@ class Keyboard {
     /** Initializes the keyboard. */
     function void init() {
         let keyboard = 24576; // Base address of the keyboard memory in the Hack platform
+
+        return;
     } 
 
     /**
@@ -42,14 +44,14 @@ class Keyboard {
      *  of the pressed key. */
     function char readChar() {
         var char c;
-        while (keyPressed() == 0) {}
+        while (Keyboard.keyPressed() = 0) {}
         let c = Keyboard.keyPressed();
-        while (keyPressed() != 0) {}
+        while ( ~(Keyboard.keyPressed() = 0) ) {}
 
         // Echo on screen
         do Output.printChar(c);
 
-        return c
+        return c;
     }
 
     /**	Displays the message on the screen, reads from the keyboard the entered
@@ -59,11 +61,11 @@ class Keyboard {
         var String newLine;
         var char c;
 
-        let newLine = String.new(80)   // Assume max string length is 80
+        let newLine = String.new(80);   // Assume max string length is 80
         do Output.printString(message);
 
         while (true) {
-            let c = readChar();
+            let c = Keyboard.readChar();
 
             if (c = 128) {  // Newline in ASCII
                 return newLine;

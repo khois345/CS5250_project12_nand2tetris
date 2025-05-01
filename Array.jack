@@ -14,7 +14,10 @@ class Array {
 
     /** Constructs a new Array of the given size. */
     function Array new(int size) {
-        return Memory.alloc(size);
+        var int base;
+        let base = Memory.peek(0);
+        do Memory.poke(0, base + size); // advance heap pointer
+        return base;
     }
 
     /** Disposes this array. */

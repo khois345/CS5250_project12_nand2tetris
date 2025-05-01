@@ -15,9 +15,9 @@ class Math {
 
     // Initializes the Math library.
     function void init() {
+        var int i;
         let n = 16; // 16-bit
         let powersOfTwo = Array.new(n);
-        var int i;
         let i = 0;
         
         while (i < n) {
@@ -45,7 +45,7 @@ class Math {
 
         while (i < 16) {
             // Check if the i-th bit of y is set, and if so, add the tempent value of x (shifted by i) to the result.
-            if (Math.bit(y, i)) {
+            if (~(((1 < i) & y) = 0)) {
                 let result = result + temp;
             }
             let temp = temp + temp;
@@ -68,13 +68,13 @@ class Math {
         let result = 0;
 
         // Perform division using subtraction
-        while (absX >= absY) {
+        while ( ~(absX < absY) ) {
             let absX = absX - absY;
             let result = result + 1;
         }
 
         // Check if positive
-        if ((x < 0 and y > 0) or (x > 0 and y < 0)) {
+        if ((x < 0 & y > 0) | (x > 0 & y < 0)) {
             let result = -result;
         }
 
@@ -84,15 +84,15 @@ class Math {
     // Reference: https://github.com/havivha/Nand2Tetris/blob/master/12/Math.jack
     /** Returns the integer part of the square root of x. */
     function int sqrt(int x) {
-        var int approx, approx_sqrt, j, y
+        var int approx, approx_sqrt, j, y;
         let approx = 0;
         let approx_sqrt = 0;
         let j = 7;
         let y = 0;
 
-        while (j >= 0) {
+        while ( ~(j < 0) ) {
             let y = approx + powersOfTwo[j];
-            if (y * y <= x) {
+            if ( ~(y * y > x)) {
                 let approx = y;
             }
             let j = j - 1;

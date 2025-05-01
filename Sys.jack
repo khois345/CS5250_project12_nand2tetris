@@ -11,9 +11,9 @@ class Sys {
     /** Performs all the initializations required by the OS. */
     function void init() {
         do Memory.init();
+        do String.init();
         do Math.init();
         do Array.init();
-        do Main.init();
         do Keyboard.init();
         do Screen.init();
         do Output.init();
@@ -25,7 +25,7 @@ class Sys {
     /** Halts the program execution. */
     function void halt() {
         while (true) {}     // Infinite loop to halt program execution
-        return
+        return;
     }
 
     /** Waits approximately duration milliseconds and returns.  */

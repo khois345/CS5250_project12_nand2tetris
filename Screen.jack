@@ -59,6 +59,8 @@ class Screen {
         } else {
             let screen[address] = screen[address] & (~pow2);
         }
+
+        return;
     }
 
     /** Draws a line from pixel (x1,y1) to pixel (x2,y2), using the current color. */
@@ -88,7 +90,7 @@ class Screen {
 
         // Loop until the line is fully drawn
         while (~((x1 + a = x2) & (y1 + b = y2))) {
-            do drawPixel(x1 + a, y1 + b); // Draw the current pixel
+            do Screen.drawPixel(x1 + a, y1 + b); // Draw the current pixel
 
             // If x1 + a reaches x2, adjust vertical offset
             if (x1 + a = x2) {
@@ -122,7 +124,7 @@ class Screen {
     /** Draws a filled rectangle whose top left corner is (x1, y1)
      *  and bottom right corner is (x2,y2), using the current color. */
     function void drawRectangle(int x1, int y1, int x2, int y2) {
-        while (x1 <= x2) {
+        while ( ~(x1 > x2) ) {
             do Screen.drawLine(x1, y1, x1, y2);
             let x1 = x1 + 1;
         }
