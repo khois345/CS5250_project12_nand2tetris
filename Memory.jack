@@ -8,26 +8,100 @@
  * consists of 32,768 words, each holding a 16-bit binary number.
  */ 
 class Memory {
+    static Array ram;
+    static Array heapSpace;
+    static int freeList;
 
     /** Initializes the class. */
     function void init() {
+        let ram = 0;
+        let heapSpace = 2048;
+        let freeList = 2048;
+        let heapSpace[0] = 0
+        let heapSpace[1] = 14335;
+        return;
     }
 
     /** Returns the RAM value at the given address. */
     function int peek(int address) {
+        return ram[address]
     }
 
     /** Sets the RAM value at the given address to the given value. */
     function void poke(int address, int value) {
+        let ram[address] = value
+        return
     }
 
     /** Finds an available RAM block of the given size and returns
      *  a reference to its base address. */
     function int alloc(int size) {
+        var int curr;
+        var int prev;
+        var int start;
+        var int end;
+
+        let curr = freeList;
+        let prev = -1;
+
+        while (curr != 0) {
+            let start = heapSpace[curr];
+            let end = heapSpace[curr + 1];
+
+            if ((end - start + 1) >= size) {
+                if ((end - start + 1) == size) {
+                    if (prev == -1) {
+                        let freeList = heapSpace[curr + 2];
+                    } else {
+                        let heapSpace[prev + 2] = heapSpace[curr + 2];
+                    }
+                } else {
+                    let heapSpace[curr] = start + size;
+                }
+                return start;
+            }
+
+            let prev = curr;
+            let curr = heapSpace[curr + 2];
+        }
+
+        do Memory.error("Out of memory");
+        return;
     }
 
     /** De-allocates the given object (cast as an array) by making
      *  it available for future allocations. */
     function void deAlloc(Array o) {
+        var int start;
+        var int end;
+        var int curr;
+
+        let start = o[0];
+        let end = start + o.length - 1;
+        let curr = freeList;
+
+        if (curr == 0 || start < heapSpace[curr]) {
+            let heapSpace[start + 2] = curr;
+            let freeList = start;
+        } else {
+            while (heapSpace[curr + 2] != 0 && heapSpace[heapSpace[curr + 2]] < start) {
+            let curr = heapSpace[curr + 2];
+            }
+            let heapSpace[start + 2] = heapSpace[curr + 2];
+            let heapSpace[curr + 2] = start;
+        }
+
+        if (heapSpace[start + 2] != 0 && heapSpace[heapSpace[start + 2]] == end + 1) {
+            let heapSpace[start + 2] = heapSpace[heapSpace[start + 2] + 2];
+            let end = heapSpace[heapSpace[start + 2] + 1];
+        }
+
+        if (curr != 0 && heapSpace[curr + 1] == start - 1) {
+            let heapSpace[curr + 1] = end;
+            let heapSpace[curr + 2] = heapSpace[start + 2];
+        } else {
+            let heapSpace[start] = start;
+            let heapSpace[start + 1] = end;
+        }
     }    
 }

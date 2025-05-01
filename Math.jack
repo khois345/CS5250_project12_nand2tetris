@@ -15,6 +15,22 @@ class Math {
 
     // Initializes the Math library.
     function void init() {
+        let n = 16; // 16-bit
+        let powersOfTwo = Array.new(n);
+        var int i;
+        let i = 0;
+        
+        while (i < n) {
+            if (i = 0) {
+                let powersOfTwo[i] = 1;
+            } else {
+                let powersOfTwo[i] = powersOfTwo[i - 1] * 2;
+            }
+
+            let i = i + 1;
+        }
+
+        return;
     }
 
     /** Returns the product of x and y. 
@@ -22,6 +38,21 @@ class Math {
      *  in an expression, it handles it by invoking this method. 
      *  Thus, in Jack, x * y and Math.multiply(x,y) return the same value. */
     function int multiply(int x, int y) {
+        var int result, temp, i;
+        let result = 0;
+        let temp = x;
+        let i = 0;
+
+        while (i < 16) {
+            // Check if the i-th bit of y is set, and if so, add the tempent value of x (shifted by i) to the result.
+            if (Math.bit(y, i)) {
+                let result = result + temp;
+            }
+            let temp = temp + temp;
+            let i = i + 1;
+        }
+
+        return result;
     }
 
     /** Returns the integer part of x / y.
@@ -29,21 +60,68 @@ class Math {
      *  an an expression, it handles it by invoking this method.
      *  Thus, x/y and Math.divide(x,y) return the same value. */
     function int divide(int x, int y) {
+        var int result, absX, absY;
+
+        // Compute absolute values of x and y
+        let absX = Math.abs(x);
+        let absY = Math.abs(y);
+        let result = 0;
+
+        // Perform division using subtraction
+        while (absX >= absY) {
+            let absX = absX - absY;
+            let result = result + 1;
+        }
+
+        // Check if positive
+        if ((x < 0 and y > 0) or (x > 0 and y < 0)) {
+            let result = -result;
+        }
+
+        return result;
     }
 
+    // Reference: https://github.com/havivha/Nand2Tetris/blob/master/12/Math.jack
     /** Returns the integer part of the square root of x. */
     function int sqrt(int x) {
+        var int approx, approx_sqrt, j, y
+        let approx = 0;
+        let approx_sqrt = 0;
+        let j = 7;
+        let y = 0;
+
+        while (j >= 0) {
+            let y = approx + powersOfTwo[j];
+            if (y * y <= x) {
+                let approx = y;
+            }
+            let j = j - 1;
+        }
+
+        return approx;
     }
 
     /** Returns the greater value. */
     function int max(int a, int b) {
+        if (a > b) {
+            return a;
+        }
+        return b;
     }
 
     /** Returns the smaller value. */
     function int min(int a, int b) {
+        if (a < b) {
+            return a;
+        }
+        return b;
     }
 
     /** Returns the absolute value of x. */
     function int abs(int x) {
+        if (x < 0)  {
+            let x = -x;
+        }
+        return x;
     }
 }
