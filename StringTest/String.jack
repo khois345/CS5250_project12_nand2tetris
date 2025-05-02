@@ -52,11 +52,11 @@ class String {
 
     /** Appends c to this string's end and returns this string. */
     method String appendChar(char c) {
-        // Only appends if len is less than maxLen
-        if (len < maxLen) {
+        if ( len < maxLen) {
             let chars[len] = c;
             let len = len + 1;
         }
+    
         return this;
     }
 
@@ -64,6 +64,7 @@ class String {
     method void eraseLastChar() {
         if (len > 0) {
             let len = len - 1;
+            let chars[len] = 0;
         }
         return;
     }
@@ -71,20 +72,24 @@ class String {
     /** Returns the integer value of this string, 
      *  until a non-digit character is detected. */
     method int intValue() {
-        var int result, i, curr;
-        let result = 0;
-        let i = 0;
-        let curr = 0;
+        var int value, i;
+        var boolean negative;
+
+        if (charAt(0) = 45) {
+          let negative = true;
+          let i = i + 1;
+        }
 
         while (i < len) {
-            let curr = chars[i] - 48; // Converting ASCII to integer
-            if (curr < 0 | curr > 9) {
-                return result;
-            }
-            let result = result * 10 + curr;
-            let i = i + 1;
+          let value = (charAt(i) - 48) + (value * 10);
+          let i = i + 1;
         }
-        return result;
+
+        if (negative) {
+          let value = -value;
+        }
+
+        return value;
     }
 
     /** Sets this string to hold a representation of the given value. */
@@ -112,7 +117,7 @@ class String {
 
     /** Returns the backspace character. */
     function char backSpace() {
-        return 128; // in ASCII
+        return 129; // in ASCII
     }
 
     /** Returns the double quote (") character. */
